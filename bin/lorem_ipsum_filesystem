@@ -1,0 +1,57 @@
+#!/bin/bash
+
+set -e
+
+# Create a large filesystem hierarchy for test.
+#
+# cf http://stackoverflow.com/a/13441479/55478
+#
+# To get a robust example (about 2G) re-run the script 5 times like this:
+#
+# time for i in $(seq 1 5); do echo $i th run:; time ~/bin/lorem_filesystem; done
+
+SEEDFILE_COUNT=150
+INDIR='loremfs';
+
+function lorem_megabyte {
+    perl -Mstrict -MText::Lorem -we '
+    my $text = Text::Lorem->new();
+
+    print $text->paragraphs(5140);'
+}
+
+function lorem_word {
+    echo ${1:-1} | perl -Mstrict -MText::Lorem -wlane '
+    my $text = Text::Lorem->new();
+
+    print $text->words($F[0]);'
+}
+
+SEEDFILES=$(lorem_word $SEEDFILE_COUNT)
+
+test -d $INDIR || mkdir $INDIR
+
+pushd $INDIR > /dev/null
+
+test -d 'seedfiles' || mkdir seedfiles
+
+export -f lorem_megabyte
+
+echo $SEEDFILES | tr -s '[:space:]' '\n' \
+    | xargs -P 4 -I @ bash -c 'lorem_megabyte > seedfiles/@.md'
+
+popd > /dev/null
+
+IFS=$'\n'
+for FILE in `ls $INDIR/seedfiles`; do
+    TOPDIR=$(lorem_word)
+    DIR=$(cat /dev/urandom \
+        | tr -dc '0-9a-zA-Z_!@$' \
+        | tr '!@$' '///////' \
+        | head -c$((10 + $RANDOM % 256)))
+
+    mkdir -p "$INDIR/tree/$TOPDIR/$DIR"
+    cp -r "$INDIR/seedfiles/$FILE" "$INDIR/tree/$TOPDIR/$DIR"
+done
+
+cp -r "$INDIR/tree" "$INDIR/seedfiles/"
