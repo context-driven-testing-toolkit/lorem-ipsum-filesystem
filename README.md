@@ -7,6 +7,8 @@ Note that **if all you want to do is fill up disk** (you don't actually need the
     fallocate -l 50G big_file    # On Linux use fallocate(1)
     
     mkfile 50G big_file          # On Mac OS use mkfile(1)
+    
+Note that `50G` above is the desired size of the file. If you want a smaller filesize you can also specify `K` or `M`
 
 ## Synopsis
 
