@@ -22,15 +22,12 @@ This should produce a folder called `loremfs` in the current directory. The fake
 
 You can run the following commands to explore the generated filesystem and make sure it fits your needs.
 
-    du -sh loremfs 
-    
-    # Shows the storage footprint of the directory, something like "268M"
+    du -sh loremfs    # Shows the storage footprint of the directory, 
+                      # something like "268M"
 
-    tree loremfs | grep -E '^\d+'
+    tree loremfs | grep -E '^\d+'    # Shows total count of files and folders,
+                                     # like "1309 directories, 267 files"
     
-    # Shows total count of files and folders, like "1309 directories, 267 files"
-   
-
 ### "Advanced" Usage
 
 If you need a larger filesystem than was generated, you can _just run the script again_ and it will 
