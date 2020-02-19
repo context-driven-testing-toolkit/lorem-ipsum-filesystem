@@ -2,6 +2,12 @@
 
 Create a fake filesystem full of text files with random names.
 
+Note that **if all you want to do is fill up disk** (you don't actually need the payload to be a filesystem) you can just use one of the following two commands depending on whether you use Linux or Mac:
+
+    fallocate -l 50G big_file    # On Linux use fallocate(1)
+    
+    mkfile 50G big_file          # On Mac OS use mkfile(1)
+
 ## Synopsis
 
 Run it like this:
@@ -9,6 +15,19 @@ Run it like this:
     bin/lorem-ipsum-filesystem
 
 This should produce a folder called `loremfs` in the current directory. The fake filesystem is in that folder.
+
+### Verifying That It Worked
+
+You can run the following commands to explore the generated filesystem and make sure it fits your needs.
+
+    du -sh loremfs 
+    
+    # Shows the storage footprint of the directory, something like "268M"
+
+    tree loremfs | grep -E '^\d+'
+    
+    # Shows total count of files and folders, like "1309 directories, 267 files"
+   
 
 ### "Advanced" Usage
 
