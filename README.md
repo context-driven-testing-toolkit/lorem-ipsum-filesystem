@@ -16,7 +16,7 @@ Run it like this:
 
     bin/lorem-ipsum-filesystem
 
-This should produce a folder called `loremfs` in the current directory. The fake filesystem is in that folder.
+This should produce a folder called `loremfs` in the current directory. The generated filesystem is in the `loremfs` folder.
 
 ### Verifying That It Worked
 
