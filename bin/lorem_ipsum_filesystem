@@ -8,7 +8,7 @@ set -e
 #
 # To get a robust example (about 2G) re-run the script 5 times like this:
 #
-# time for i in $(seq 1 5); do echo $i th run:; time ~/bin/lorem_filesystem; done
+#     for i in $(seq 1 5); do echo $i th run:; bin/lorem_filesystem; done
 
 SEEDFILE_COUNT=150
 INDIR='loremfs';
